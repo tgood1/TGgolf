@@ -73,11 +73,12 @@ let hole1 = new Hole1(world, scene, wallPhysMat, {y:3}, sphereWallMat);
 
 function startHole1(){
     sphereBody.position.set(hole1.BallStartPos.x, hole1.BallStartPos.y, hole1.BallStartPos.z);
-    camera.position.set(hole1.BallStartPos.x, hole1.BallStartPos.y + 100, hole1.BallStartPos.z - 150);
-    orbit.update();
+    // camera.position.set(hole1.BallStartPos.x, hole1.BallStartPos.y + 100, hole1.BallStartPos.z - 150);
+    // orbit.update();
     sphereBody.velocity.set(0, 0, 0);
+    drawAimLine(0, 10);
     //@ts-ignore
-    orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
+    // orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
 
 }
 
@@ -89,12 +90,10 @@ let isBallMoving = false;
 let moveCamera = true;
 function animate() {
     world.step(timeStep);
-
 	//@ts-ignore
     sphereMesh.position.copy(sphereBody.position); 
 	//@ts-ignore
     sphereMesh.quaternion.copy(sphereBody.quaternion);
-
 
     renderer.render(scene, camera);
 	requestAnimationFrame(animate);
@@ -122,11 +121,28 @@ orbit.addEventListener('start', function () {
     moveCamera = false;
 });
 
+function drawAimLine(angle, length) {
+    let lineMaterial = new T.LineDashedMaterial({
+        color: "gold",
+        dashSize: 2,
+        gapSize: 1,
+    });
+    let points = [];
+    points.push(new T.Vector3(2 * Math.sin(angle) + sphereBody.position.x, sphereBody.position.y -2, 2 * Math.cos(angle) + sphereBody.position.z));
+    points.push(new T.Vector3(length * Math.sin(angle) + sphereBody.position.x, sphereBody.position.y -2, length * Math.cos(angle) + sphereBody.position.z));
+    let lineGeom = new T.BufferGeometry().setFromPoints(points);
+    console.log(points);
+    let aimLine = new T.Line(lineGeom, lineMaterial);
+    scene.add(aimLine);
+
+
+}
+
 
 // reset camera button. Moves camera back into place and restarts the automatic movement
 /** @type {HTMLElement} */(document.getElementById("resetCamera")).onclick = function () {
     //@ts-ignore
-    camera.position.set(sphereBody.position.x, sphereBody.position.y + 80, sphereBody.position.z-60);
+    camera.position.set(sphereBody.position.x, sphereBody.position.y + 80, sphereBody.position.z-100);
     //@ts-ignore
     orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
     camera.lookAt(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
