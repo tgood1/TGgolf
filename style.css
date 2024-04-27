@@ -1,0 +1,11 @@
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#resetCamera {
+    position: absolute;
+    top: 710px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+}
