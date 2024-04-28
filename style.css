@@ -6,6 +6,61 @@
 
 #resetCamera {
     position: absolute;
-    top: 710px; /* Adjust as needed */
-    left: 10px; /* Adjust as needed */
+    top: 710px;
+    left: 10px;
 }
+
+#rollBall {
+    position: absolute;
+    top: 730px; 
+    left: 10px; 
+}
+
+#powerBar {
+    position: absolute;
+    top: 730px; 
+    left: 300px; 
+}
+#aim {
+    position: absolute;
+    top: 770px; 
+    left: 300px; 
+}
+
+
+/**
+* inspiration for slider design from w3schools: https://www.w3schools.com/howto/howto_js_rangeslider.asp
+*/
+.slider:hover {
+	opacity: 1;
+  }
+  .slider {
+	-webkit-appearance: none;
+	width: 300px;
+	height: 15px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+  }
+  
+  .slider:hover {
+	opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 15px;
+	height: 35px;
+	background: #aa5404;
+	cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #aa5404;
+	cursor: pointer;
+  }
