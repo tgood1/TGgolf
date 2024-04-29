@@ -16,6 +16,12 @@
     left: 10px; 
 }
 
+#resetBall {
+    position: absolute;
+    top: 750px; 
+    left: 10px; 
+}
+
 #powerBar {
     position: absolute;
     top: 730px; 
@@ -29,7 +35,7 @@
 
 
 /**
-* inspiration for slider design from w3schools: https://www.w3schools.com/howto/howto_js_rangeslider.asp
+* slider design from w3schools: https://www.w3schools.com/howto/howto_js_rangeslider.asp
 */
 .slider:hover {
 	opacity: 1;

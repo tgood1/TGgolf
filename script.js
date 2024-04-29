@@ -32,70 +32,77 @@ scene.add(point);
 
 
 
-const sphereGeo = new T.SphereGeometry(2, 50, 50);
+const ballGeo = new T.SphereGeometry(2, 50, 50);
 
 let normalTexture = new T.TextureLoader().load("./dimples_normal.jpg");
-let sphereMat = new T.MeshStandardMaterial({normalMap: normalTexture})
+let ballMat = new T.MeshStandardMaterial({normalMap: normalTexture})
 // @ts-ignore
-const sphereMesh = new T.Mesh( sphereGeo, sphereMat);
-scene.add(sphereMesh);
+const ballMesh = new T.Mesh( ballGeo, ballMat);
+scene.add(ballMesh);
 
 
 const world = new CANNON.World({
-    gravity: new CANNON.Vec3(0, -9.81, 0)
+    gravity: new CANNON.Vec3(0, -19.81, 0)
 });
 
 
-const spherePhysMat = new CANNON.Material("SphereMaterial");
+const ballPhysMat = new CANNON.Material("ballMaterial");
 
-const sphereBody = new CANNON.Body({
+const ballBody = new CANNON.Body({
     mass: 4,
     shape: new CANNON.Sphere(2),
     position: new CANNON.Vec3(0, 2, 0),
-    material: spherePhysMat
+    material: ballPhysMat
 });
-world.addBody(sphereBody);
-// sphereBody.velocity.set(14, 0, 1);
-sphereBody.linearDamping = 0.25;
-sphereBody.angularDamping = 0.25;
+world.addBody(ballBody);
+ballBody.linearDamping = 0.25;
+ballBody.angularDamping = 0.25;
 
 
 // wall material and contact material
 const wallPhysMat = new CANNON.Material("WallMaterial");
-const sphereWallMat = new CANNON.ContactMaterial(
+const ballWallMat = new CANNON.ContactMaterial(
     wallPhysMat,
-    spherePhysMat,
+    ballPhysMat,
     {restitution: 0.8},
 );
 
-
-let hole1 = new Hole1(world, scene, wallPhysMat, {y:3}, sphereWallMat);
 let AIMLINE;
 let AIM_ANGLE = 0;
 let POWER = 10;
-const ANGLE_DIFF = 0.05;
+const ANGLE_DIFF = 0.01;
+let currentHole;
+
+
 function startHole1(){
-    sphereBody.position.set(hole1.BallStartPos.x, hole1.BallStartPos.y, hole1.BallStartPos.z);
-    sphereBody.velocity.set(0, 0, 0);
+    currentHole = new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat);
+    ballBody.position.set(currentHole.BallStartPos.x, currentHole.BallStartPos.y, currentHole.BallStartPos.z);
+    ballBody.velocity.set(0, 0, 0);
 }
 
 startHole1();
 
+// left/right arrow key input will update the AIM_ANGLE and the aim slider display
 let aimSlider = /** @type {HTMLElement} */ (document.getElementById("aimSlider"));
 document.addEventListener('keydown', function(event) {
-    // listen for arrow key input
     switch(event.key) {
         case "ArrowLeft":
             // left arrow key
             event.preventDefault();
             AIM_ANGLE += ANGLE_DIFF;
-            aimSlider.value = (- AIM_ANGLE * 100 / Math.PI) % 100;
+            if (AIM_ANGLE > Math.PI) AIM_ANGLE -= 2 * Math.PI;
+            //@ts-ignore
+            aimSlider.value = - AIM_ANGLE * 100 / Math.PI;
+            if (moveCamera) resetCamera();
             break;
         case "ArrowRight":
             // right arrow key
             event.preventDefault();
             AIM_ANGLE -= ANGLE_DIFF;
-            aimSlider.value = (- AIM_ANGLE * 100 / Math.PI) % 100;
+            if (AIM_ANGLE < - Math.PI) AIM_ANGLE += 2 * Math.PI;
+            //@ts-ignore
+            aimSlider.value = - AIM_ANGLE * 100 / Math.PI;
+            if (moveCamera) resetCamera();
             break;
     }
 });
@@ -104,91 +111,125 @@ const timeStep = 1 / 24;
 const MINVELOCITY = .2;
 let isBallMoving = false;
 let moveCamera = true;
+let lastBallPosition = new CANNON.Vec3(0, 0, 0);
+// let CAMERA_MOTION_ENABLED = true;
 function animate() {
     world.step(timeStep);
 	//@ts-ignore
-    sphereMesh.position.copy(sphereBody.position); 
+    ballMesh.position.copy(ballBody.position); 
 	//@ts-ignore
-    sphereMesh.quaternion.copy(sphereBody.quaternion);
+    ballMesh.quaternion.copy(ballBody.quaternion);
 
     renderer.render(scene, camera);
 	requestAnimationFrame(animate);
     scene.remove(AIMLINE);
-	if (sphereBody.velocity.length() <= MINVELOCITY) {
-		sphereBody.velocity.set(0,0,0);
-		sphereBody.angularVelocity.set(0,0,0);
-        // @ts-ignore
-        if (isBallMoving) orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
+	if (ballBody.velocity.length() <= MINVELOCITY) {
+        // ball is not moving
+		ballBody.velocity.set(0,0,0);
+		ballBody.angularVelocity.set(0,0,0);
+        
+        if (isBallMoving) {
+            // only do these things once when the ball stops
+            // @ts-ignore
+            orbit.target = new T.Vector3(ballBody.position.x, ballBody.position.y, ballBody.position.z);
+            lastBallPosition.x = ballBody.position.x;
+            lastBallPosition.z = ballBody.position.z;
+            lastBallPosition.y = ballBody.position.y;
+        }    
         isBallMoving = false;
-        drawAimLine(AIM_ANGLE, 10);
+        // only draw the aim line if the ball isn't moving
+        drawAimLine(AIM_ANGLE, 10 + POWER /4);
+        
+        
     } else {
+        // ball is moving
         isBallMoving = true;
         if (moveCamera) {
             // @ts-ignore
-            camera.position.set(sphereBody.position.x, sphereBody.position.y + 80, sphereBody.position.z-100);
+            camera.position.set(ballBody.position.x - 100 * Math.sin(AIM_ANGLE), ballBody.position.y + 80, ballBody.position.z - 100 * Math.cos(AIM_ANGLE));
             // @ts-ignore
-            orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
-            camera.lookAt(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
+            orbit.target = new T.Vector3(ballBody.position.x, ballBody.position.y, ballBody.position.z);
+            camera.lookAt(ballBody.position.x, ballBody.position.y, ballBody.position.z);
         }
     }
-    
-    
-    
+    // replace the ball if it fell off the ground
+    if (ballBody.position.y < -150) resetBallToLastPosition();
 }
 
 animate();
 
 function rollBall(AIM_ANGLE, POWER) {
-    sphereBody.velocity.set(POWER * Math.sin(AIM_ANGLE), 0, POWER * Math.cos(AIM_ANGLE));
-    console.log("AIM_ANGLE: " + AIM_ANGLE);
-    console.log("POWER: " + POWER);
+    ballBody.velocity.set(POWER * Math.sin(AIM_ANGLE), 0, POWER * Math.cos(AIM_ANGLE));
 }
 
+// If camera controls are being used, stop updating camera position automatically
 orbit.addEventListener('start', function () {
-    // If controls are being used, stop updating camera position automatically
     moveCamera = false;
 });
 
+// draw a line in the direction the shot will go
 function drawAimLine(angle, length) {
     let lineMaterial = new T.LineBasicMaterial({
         color: "gold",
     });
     let points = [];
-    points.push(new T.Vector3(2 * Math.sin(angle) + sphereBody.position.x, sphereBody.position.y - 1.9, 2 * Math.cos(angle) + sphereBody.position.z));
-    points.push(new T.Vector3(length * Math.sin(angle) + sphereBody.position.x, sphereBody.position.y -1.9, length * Math.cos(angle) + sphereBody.position.z));
+    points.push(new T.Vector3(2 * Math.sin(angle) + ballBody.position.x, ballBody.position.y - 1.9, 2 * Math.cos(angle) + ballBody.position.z));
+    points.push(new T.Vector3(length * Math.sin(angle) + ballBody.position.x, ballBody.position.y -1.9, length * Math.cos(angle) + ballBody.position.z));
     let lineGeom = new T.BufferGeometry().setFromPoints(points);
     let aimLine = new T.Line(lineGeom, lineMaterial);
     scene.add(aimLine);
+    // assign to a global variable so we can remove it from the scene when needed
     AIMLINE = aimLine;
 
 }
 
 
-// reset camera button. Moves camera back into place and restarts the automatic movement
+// reset camera button. Moves camera to point down the AIMLINE and reenables the automatic movement
 /** @type {HTMLElement} */(document.getElementById("resetCamera")).onclick = function () {
+    resetCamera();
+}
+
+function resetCamera() {
     //@ts-ignore
-    camera.position.set(sphereBody.position.x, sphereBody.position.y + 80, sphereBody.position.z-100);
+    camera.position.set(ballBody.position.x - 100 * Math.sin(AIM_ANGLE), ballBody.position.y + 80, ballBody.position.z - 100 * Math.cos(AIM_ANGLE));
     //@ts-ignore
-    orbit.target = new T.Vector3(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
-    camera.lookAt(sphereBody.position.x, sphereBody.position.y, sphereBody.position.z);
+    orbit.target = new T.Vector3(ballBody.position.x, ballBody.position.y, ballBody.position.z);
+    camera.lookAt(ballBody.position.x, ballBody.position.y, ballBody.position.z);
     moveCamera = true;
 }
 
-let hitButton = /** @type {HTMLElement} */ (document.getElementById("rollBall"));
 // hit the ball when button is clicked!
+let hitButton = /** @type {HTMLElement} */ (document.getElementById("rollBall"));
 hitButton.onclick = function () {
     if (!isBallMoving) rollBall(AIM_ANGLE, POWER);
 }
 
-let powerSlider = /** @type {HTMLElement} */ (document.getElementById("power"));
 // update power from slider value
-powerSlider.onchange = function () {
+let powerSlider = /** @type {HTMLElement} */ (document.getElementById("power"));
+powerSlider.oninput = function () {
     //@ts-ignore
     POWER = powerSlider.value;
 }
 
-// update power from slider value
+// update aim from slider value
 aimSlider.oninput = function () {
     // @ts-ignore
     AIM_ANGLE = -(aimSlider.value ) * Math.PI /100;
+    if (moveCamera) resetCamera();
+    
+}
+
+// reset ball to last shot
+let resetBallButton = /** @type {HTMLElement} */ (document.getElementById("resetBall"));
+resetBallButton.onclick = function () {
+    resetBallToLastPosition();
+}
+
+function resetBallToLastPosition() {
+    ballBody.position.x = lastBallPosition.x;
+    ballBody.position.y = lastBallPosition.y;
+    ballBody.position.z = lastBallPosition.z;
+    ballBody.velocity.set(0, 0, 0);
+    ballBody.angularVelocity.set(0,0,0);
+    resetCamera();
 }

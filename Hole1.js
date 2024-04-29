@@ -22,6 +22,6 @@ export class Hole1 {
 		
 		let hole = new TGCup(world, scene, physMat, {y: y}, contactMat);
 
-		this.BallStartPos = new CANNON.Vec3(x, y+3, z - 200);
+		this.BallStartPos = new CANNON.Vec3(x, y +4, z - 200);
 	}
 }
