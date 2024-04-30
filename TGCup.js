@@ -39,7 +39,7 @@ export class TGCup {
 		const wallHeight = 8;
 		const outerRadius = radius + wallHeight / 2;
 		let wallAry = [];
-		let cupAry = [];
+		let objectAry = [];
 		const numWalls = 20;
 		const yPos = params.y ?? 5;
 		const x = params.x ?? 0;
@@ -57,11 +57,20 @@ export class TGCup {
 			let xCup = x + innerRadius * Math.cos(rotZ);
 			let zCup = z + innerRadius * Math.sin(rotZ);
 			let yCup = yPos - 0.5 - height / 2;
-			wallAry.push(new TGWall(world, scene, cupPhysMat, {y: yPos, z: zPos, x: xPos, width: 10, height: wallHeight, color: "green", rotationX: Math.PI / 2, rotationZ: rotZ}, sphereCupMat));
-			cupAry.push(new TGWall(world, scene, cupPhysMat, {y: yCup, z: zCup, x: xCup, width: radius * 2 * Math.PI / numWalls, height: height, color: "white", rotationY: cupAngle}, sphereCupMat));
+			objectAry.push(new TGWall(world, scene, cupPhysMat, {y: yPos, z: zPos, x: xPos, width: 10, height: wallHeight, color: "green", rotationX: Math.PI / 2, rotationZ: rotZ}, sphereCupMat));
+			objectAry.push(new TGWall(world, scene, cupPhysMat, {y: yCup, z: zCup, x: xCup, width: radius * 2 * Math.PI / numWalls, height: height, color: "white", rotationY: cupAngle}, sphereCupMat));
 		}
-		
-		let cupBottom = new TGWall(world, scene, cupPhysMat, {y: yPos - height, z: z, x: x, width: radius * 2, height: radius * 2, color: "white", rotationX: Math.PI / 2}, sphereCupMat);
-		
+		// bottom of the cup
+		objectAry.push(new TGWall(world, scene, cupPhysMat, {y: yPos - height, z: z, x: x, width: radius * 2, height: radius * 2, color: "white", rotationX: Math.PI / 2}, sphereCupMat));
+		this.objects = objectAry;
+		// this.world = world;
+		// this.scene = scene;
+	}
+
+	remove() {
+		this.objects.forEach((object) => {
+			console.log(object);
+			object.remove();
+		})
 	}
 }

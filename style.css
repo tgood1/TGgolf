@@ -8,12 +8,32 @@
     position: absolute;
     top: 710px;
     left: 10px;
+	width: 170px;
+	height: 55px;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-size: 16px;
+	transition-duration: 0.2s;
+}
+#resetCamera:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
 }
 
 #rollBall {
     position: absolute;
-    top: 730px; 
+    top: 775px; 
     left: 10px; 
+	width: 170px;
+	height: 55px;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-size: 16px;
+	transition-duration: 0.2s;
+}
+#rollBall:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
 }
 
 #resetBall {
@@ -24,16 +44,64 @@
 
 #powerBar {
     position: absolute;
-    top: 730px; 
-    left: 300px; 
+    top: 710px; 
+    left: 200px; 
+	white-space: pre;
+	border-style: dashed;
+	width: 500px;
 }
 #aim {
     position: absolute;
     top: 770px; 
-    left: 300px; 
+    left: 200px; 
+	white-space: pre;
+	border-style: dashed;
+	width: 500px;
 }
-
-
+#scoreCard {
+    position: absolute;
+    top: 870px; 
+    left: 10px; 
+	border-style:solid;
+	border-width: 1.5px;
+}
+.scorecardButton {
+	width: 65px;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	border: 2px solid #555555;
+	transition-duration: 0.2s;
+}
+.scorecardButton:hover {
+	background-color: rgb(65, 65, 65);
+	color:white;
+	cursor: pointer;
+}
+.labels {
+	font-weight: 600;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.table {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#hole9:hover {
+	background-color: rgb(65, 65, 65);
+	color:white;
+	cursor: pointer;
+}
+#holeLabel {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-size: 34px;
+	color: white;
+	/* background-color: black; */
+	width: 150px;
+	position: absolute;
+    top: 660px; 
+    left: 20px; 
+}
+/* td {
+	border-left-style: solid;
+	border-width: 2px;
+} */
 /**
 * slider design from w3schools: https://www.w3schools.com/howto/howto_js_rangeslider.asp
 */

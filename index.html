@@ -21,16 +21,57 @@
 
     <button type="button" id="resetCamera" >Reset Camera</button>
     <button type="button" id="rollBall">Hit</button>
-    <button type="button" id="resetBall">Reset Ball</button>
+    <!-- <button type="button" id="resetBall">Reset Ball</button> -->
     <div id="powerBar">
-      Min
-      <input type="range" min="10" max="200" value="10" class="slider" id="power">
-      MAX
+      <span class="labels">Power:    MIN   <input type="range" min="10" max="200" value="10" class="slider" id="power">    MAX </span>
     </div>
     <div id="aim">
-      AIM
-      <input type="range" min="-100" max="100" value="0" class="slider" id="aimSlider" step="0.01">
-      
+      <span class=labels>Aim:                  <input type="range" min="-100" max="100" value="0" class="slider" id="aimSlider" step="0.01"></span>
     </div>
+    <!-- inspiration for scorecard design from @RichWolverton https://codepen.io/winthropian/pen/XOWBQZ -->
+    <div class="table" id="scoreCard">
+			<table class="table-bordered">
+				<tr class="text-center">
+					<th class="text-left">Go To Hole:</th>
+					<td><button type="button" id="hole1" class="scorecardButton">1</button></td>
+          <td><button type="button" id="hole2" class="scorecardButton">2</button></td>
+          <td><button type="button" id="hole3" class="scorecardButton">3</button></td>
+          <td><button type="button" id="hole4" class="scorecardButton">4</button></td>
+          <td><button type="button" id="hole5" class="scorecardButton">5</button></td>
+          <td><button type="button" id="hole6" class="scorecardButton">6</button></td>
+          <td><button type="button" id="hole7" class="scorecardButton">7</button></td>
+          <td><button type="button" id="hole8" class="scorecardButton">8</button></td>
+          <td><button type="button" id="hole9" class="scorecardButton">9</button></td>
+					<th class="text-uppercase">Total</th>
+				</tr>
+				<tr id="par" class="text-center" style="background-color: black; color: white;">
+					<td class="text-left"><strong>Par</strong></td>
+					<td>5</td>
+					<td>3</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>3</td>
+					<td>4</td>
+					<td>35</td>
+				</tr>
+				<tr  class="text-center">
+					<td class="text-left"><strong>Player 1</strong></td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td><input type="number" min="0" max="20" /> </td>
+					<td id="total"><input type="number" min="0" max="100" /></td>
+				</tr>
+			</table>
+		</div>
+    <div id="holeLabel"> HOLE #</div>
   </body>
 </html>

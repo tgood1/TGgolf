@@ -66,13 +66,19 @@ export class TGWall {
 		wallBody.quaternion.mult(wallQuat, wallBody.quaternion);
 		wallQuat.setFromAxisAngle(new CANNON.Vec3(0,0,1), zRot);
 		wallBody.quaternion.mult(wallQuat, wallBody.quaternion);
-		// wall.quaternion.set(wallQuat);
-		// wallBody.quaternion.set(wallQuat);
-		// wallBody.quaternion.mult(wallQuat, wallBody.quaternion);
 		wall.quaternion.copy(wallBody.quaternion);
 		wall.position.copy(wallBody.position); 
 
 		world.addContactMaterial(sphereWallMat);
-		
+
+		this.world = world;
+		this.scene = scene;
+		this.body = wallBody;
+		this.mesh = wall;
+	}
+
+	remove() {
+		this.scene.remove(this.mesh);
+		this.world.removeBody(this.body);
 	}
 }

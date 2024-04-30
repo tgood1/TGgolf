@@ -3,9 +3,10 @@ import * as T from "./libs/three/build/three.module.js";
 import { OrbitControls } from "./libs/three/examples/jsm/controls/OrbitControls.js";
 //@ts-ignore
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
-// import { TGWall } from "./TGWall.js";
+import { TGWall } from "./TGWall.js";
 // import { TGCup } from "./TGCup.js";
 import { Hole1 } from "./Hole1.js";
+import { Hole2 } from "./Hole2.js";
 
 const windowWidth = 700;
 const windowHeight = 700;
@@ -72,18 +73,33 @@ let AIM_ANGLE = 0;
 let POWER = 10;
 const ANGLE_DIFF = 0.01;
 let currentHole;
+let moveCamera = true;
+let aimSlider = /** @type {HTMLElement} */ (document.getElementById("aimSlider"));
+let powerSlider = /** @type {HTMLElement} */ (document.getElementById("power"));
+let holeLabelDiv = /**@type {HTMLElement} */ (document.getElementById("holeLabel"));
 
 
-function startHole1(){
-    currentHole = new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat);
+
+function startHole (holeObject, holeLabel) {
+    if (currentHole != null) currentHole.clearAll(); // clear the existing hole if there is one
+    currentHole = holeObject;
     ballBody.position.set(currentHole.BallStartPos.x, currentHole.BallStartPos.y, currentHole.BallStartPos.z);
     ballBody.velocity.set(0, 0, 0);
+    AIM_ANGLE = 0;
+    //@ts-ignore
+    aimSlider.value = 0;
+    POWER = 10;
+    //@ts-ignore
+    powerSlider.value = POWER;
+    holeLabelDiv.innerHTML = holeLabel;
+    resetCamera();
 }
 
-startHole1();
+// start with Hole #1
+startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
 
 // left/right arrow key input will update the AIM_ANGLE and the aim slider display
-let aimSlider = /** @type {HTMLElement} */ (document.getElementById("aimSlider"));
+
 document.addEventListener('keydown', function(event) {
     switch(event.key) {
         case "ArrowLeft":
@@ -110,7 +126,7 @@ document.addEventListener('keydown', function(event) {
 const timeStep = 1 / 24;
 const MINVELOCITY = .2;
 let isBallMoving = false;
-let moveCamera = true;
+
 let lastBallPosition = new CANNON.Vec3(0, 0, 0);
 // let CAMERA_MOTION_ENABLED = true;
 function animate() {
@@ -205,7 +221,7 @@ hitButton.onclick = function () {
 }
 
 // update power from slider value
-let powerSlider = /** @type {HTMLElement} */ (document.getElementById("power"));
+
 powerSlider.oninput = function () {
     //@ts-ignore
     POWER = powerSlider.value;
@@ -220,10 +236,10 @@ aimSlider.oninput = function () {
 }
 
 // reset ball to last shot
-let resetBallButton = /** @type {HTMLElement} */ (document.getElementById("resetBall"));
-resetBallButton.onclick = function () {
-    resetBallToLastPosition();
-}
+// let resetBallButton = /** @type {HTMLElement} */ (document.getElementById("resetBall"));
+// resetBallButton.onclick = function () {
+//     resetBallToLastPosition();
+// }
 
 function resetBallToLastPosition() {
     ballBody.position.x = lastBallPosition.x;
@@ -232,4 +248,21 @@ function resetBallToLastPosition() {
     ballBody.velocity.set(0, 0, 0);
     ballBody.angularVelocity.set(0,0,0);
     resetCamera();
+}
+
+// update power from slider value
+let hole1Button = /** @type {HTMLElement} */ (document.getElementById("hole1"));
+let hole2Button = /** @type {HTMLElement} */ (document.getElementById("hole2"));
+let hole3Button = /** @type {HTMLElement} */ (document.getElementById("hole3"));
+let hole4Button = /** @type {HTMLElement} */ (document.getElementById("hole4"));
+let hole5Button = /** @type {HTMLElement} */ (document.getElementById("hole5"));
+let hole6Button = /** @type {HTMLElement} */ (document.getElementById("hole6"));
+let hole7Button = /** @type {HTMLElement} */ (document.getElementById("hole7"));
+let hole8Button = /** @type {HTMLElement} */ (document.getElementById("hole8"));
+let hole9Button = /** @type {HTMLElement} */ (document.getElementById("hole9"));
+hole1Button.onclick = function () {
+    startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
+}
+hole2Button.onclick = function () {
+    startHole(new Hole2(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1")
 }
