@@ -1,10 +1,7 @@
-import * as T from "./libs/three/build/three.module.js";
 //@ts-ignore
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
-
-import { TGWall } from "./TGWall.js";
-import { TGCup } from "./TGCup.js";
 import { TGPlatform } from "./TGPlatform.js";
+import { HoleAssembly } from "./HoleAssembly.js";
 
 
 export class Hole3 {
@@ -13,40 +10,17 @@ export class Hole3 {
 		let y = params.y ?? 0;
 		let z = params.z ?? 0;
 		let objectAry = [];
-		objectAry.push(new TGPlatform(world, scene, physMat, {z: -90, width: 50, rotationX: 0}, contactMat));
-		objectAry.push(new TGPlatform(world, scene, physMat, {y: 8, length: 30, z: 10, width: 50, rotationX: -Math.PI / 6}, contactMat));
-		objectAry.push(new TGPlatform(world, scene, physMat, {y: -3, length: 80, z: 130, width: 50, rotationX: 0}, contactMat));
-		
-		let moveCup = 180;
-		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 30, width: 50, y: y-3, z: z + moveCup+20}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 20, y: y-3, x: x + 15, z: moveCup}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 20, y: y-3, x: x - 15, z: moveCup}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 230, rotationY: Math.PI / 2,z: z - 80+ moveCup, y: y + 2.5, x: x - 24.5}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 230, rotationY: Math.PI / 2,z: z - 80 + moveCup, y: y + 2.5, x: x + 24.5}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 50, z: z + 35 + moveCup, y: y + 2.5 - 3, x: x}, contactMat));
-
-		
-		objectAry.push(new TGCup(world, scene, physMat, {y: y-3, z: moveCup}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {z: -90, width: 50, rotationX: 0, length: 100}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {y: 8, length: 30, z: -30, width: 50, rotationX: -Math.PI / 6}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {y: -3, length: 80, z: 30, width: 50, rotationX: 0}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {y: 5, length: 30, z: 50, width: 50, rotationX: -Math.PI / 6}, contactMat));
 		
 		
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 240, width: 50, y: y, z: z -90, color: "green"}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 200, width: 50,x: x -60, y: y, z: z -70, color: "green"}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 50,x:x-60, y: y, z: z - 200}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 20, y: y, x: x + -45, z: z-180}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 50, width: 10, y: y, x: x - 30, z: z + 5}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 20, y: y, x: x - 75, z: z-180}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 190, rotationY: Math.PI / 2,z: z - 115, y: y + 2.5, x: x - 24.5}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 240, rotationY: Math.PI / 2,z: z - 90, y: y + 2.5, x: x + 24.5}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 110, z: z + 30, y: y + 2.5, x: x - 30}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 240, rotationY: Math.PI / 2,z: z - 90, y: y + 2.5, x: x - 85}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 10, z: z -20, y: y + 2.5, x: x - 30}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 190, rotationY: Math.PI / 2,z: z - 115, y: y + 2.5, x: x - 34.5}, contactMat));
-		// objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 51, z: z - 210, y: y + 2.5, x: x - 59.5}, contactMat));
-		// objectAry.push(new TGCup(world, scene, physMat, {x: x - 60, y: y, z: z-180}, contactMat));
+		objectAry.push(new HoleAssembly(world, scene, physMat, {x: 0, y: -5, z: 150}, contactMat));
 
 		this.objects = objectAry;
 
-		this.BallStartPos = new CANNON.Vec3(x, y +4, z - 180);
+		this.BallStartPos = new CANNON.Vec3(x, y +4, z - 130);
 	}
 
 	// removes all THREE.js and CANNON.js objects from the scene/world
