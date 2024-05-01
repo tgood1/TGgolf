@@ -7,6 +7,7 @@ import { TGWall } from "./TGWall.js";
 // import { TGCup } from "./TGCup.js";
 import { Hole1 } from "./Hole1.js";
 import { Hole2 } from "./Hole2.js";
+import { Hole3 } from "./Hole3.js";
 
 const windowWidth = 700;
 const windowHeight = 700;
@@ -96,7 +97,8 @@ function startHole (holeObject, holeLabel) {
 }
 
 // start with Hole #1
-startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
+// startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
+startHole(new Hole3(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 3")
 
 // left/right arrow key input will update the AIM_ANGLE and the aim slider display
 
@@ -264,5 +266,8 @@ hole1Button.onclick = function () {
     startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
 }
 hole2Button.onclick = function () {
-    startHole(new Hole2(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1")
+    startHole(new Hole2(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 2");
+}
+hole3Button.onclick = function () {
+    startHole(new Hole3(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 3");
 }

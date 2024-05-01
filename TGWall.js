@@ -3,7 +3,7 @@ import * as T from "./libs/three/build/three.module.js";
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
 
 
-// make a wall?
+// make a box-shaped wall
 export class TGWall {
 	/**
 	 * @param {CANNON world} world
@@ -55,7 +55,7 @@ export class TGWall {
 			params.z ?? 0
 		);
 
-		// only do one rotation at a time or it gets weird
+		// rotation
 		let xRot = params.rotationX ?? 0;
 		let yRot = params.rotationY ?? 0;
 		let zRot = params.rotationZ ?? 0;
@@ -77,6 +77,7 @@ export class TGWall {
 		this.mesh = wall;
 	}
 
+	// remove the wall mesh and body from the scene/world
 	remove() {
 		this.scene.remove(this.mesh);
 		this.world.removeBody(this.body);
