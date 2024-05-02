@@ -14,6 +14,8 @@ export class Hole3 {
 		objectAry.push(new TGPlatform(world, scene, physMat, {y: 8, length: 30, z: -30, width: 50, rotationX: -Math.PI / 6}, contactMat));
 		objectAry.push(new TGPlatform(world, scene, physMat, {y: -3, length: 80, z: 30, width: 50, rotationX: 0}, contactMat));
 		objectAry.push(new TGPlatform(world, scene, physMat, {y: 5, length: 30, z: 50, width: 50, rotationX: -Math.PI / 6}, contactMat));
+
+		objectAry.push(new TGPlatform(world, scene, physMat, {y: -5, length: 180, z: 255, width: 50, rotationX: 0}, contactMat));
 		
 		
 		objectAry.push(new HoleAssembly(world, scene, physMat, {x: 0, y: -5, z: 150}, contactMat));

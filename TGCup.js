@@ -69,7 +69,6 @@ export class TGCup {
 
 	remove() {
 		this.objects.forEach((object) => {
-			console.log(object);
 			object.remove();
 		})
 	}

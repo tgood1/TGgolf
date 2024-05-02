@@ -9,6 +9,11 @@ import { Hole1 } from "./Hole1.js";
 import { Hole2 } from "./Hole2.js";
 import { Hole3 } from "./Hole3.js";
 import { Hole4 } from "./Hole4.js";
+import { Hole5 } from "./Hole5.js";
+import { Hole6 } from "./Hole6.js";
+import { Hole7 } from "./Hole7.js";
+import { Hole8 } from "./Hole8.js";
+import { Hole9 } from "./Hole9.js";
 
 const windowWidth = 700;
 const windowHeight = 700;
@@ -45,7 +50,7 @@ scene.add(ballMesh);
 
 
 const world = new CANNON.World({
-    gravity: new CANNON.Vec3(0, -19.81, 0)
+    gravity: new CANNON.Vec3(0, -100, 0)
 });
 
 
@@ -64,10 +69,12 @@ ballBody.angularDamping = 0.25;
 
 // wall material and contact material
 const wallPhysMat = new CANNON.Material("WallMaterial");
+// wallPhysMat.friction = 0.0;
 const ballWallMat = new CANNON.ContactMaterial(
     wallPhysMat,
     ballPhysMat,
     {restitution: 0.8},
+
 );
 
 let AIMLINE;
@@ -82,14 +89,15 @@ let holeLabelDiv = /**@type {HTMLElement} */ (document.getElementById("holeLabel
 
 
 
-function startHole (holeObject, holeLabel) {
+function startHole (holeObject, holeLabel, aimAngle) {
     if (currentHole != null) currentHole.clearAll(); // clear the existing hole if there is one
     currentHole = holeObject;
     ballBody.position.set(currentHole.BallStartPos.x, currentHole.BallStartPos.y, currentHole.BallStartPos.z);
     ballBody.velocity.set(0, 0, 0);
-    AIM_ANGLE = 0;
+    ballBody.angularVelocity.set(0,0,0);
+    AIM_ANGLE = aimAngle ?? 0;
     //@ts-ignore
-    aimSlider.value = 0;
+    aimSlider.value = - AIM_ANGLE * 100 / Math.PI;
     POWER = 10;
     //@ts-ignore
     powerSlider.value = POWER;
@@ -99,7 +107,7 @@ function startHole (holeObject, holeLabel) {
 
 // start with Hole #1
 // startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
-startHole(new Hole4(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 4");
+startHole(new Hole7(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 7");
 
 // left/right arrow key input will update the AIM_ANGLE and the aim slider display
 
@@ -126,8 +134,9 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-const timeStep = 1 / 24;
-const MINVELOCITY = .2;
+// const timeStep = 1 / 24;
+const timeStep = 1/ 50;
+const MINVELOCITY = 1;
 let isBallMoving = false;
 
 let lastBallPosition = new CANNON.Vec3(0, 0, 0);
@@ -151,9 +160,9 @@ function animate() {
             // only do these things once when the ball stops
             // @ts-ignore
             orbit.target = new T.Vector3(ballBody.position.x, ballBody.position.y, ballBody.position.z);
-            lastBallPosition.x = ballBody.position.x;
-            lastBallPosition.z = ballBody.position.z;
-            lastBallPosition.y = ballBody.position.y;
+            // lastBallPosition.x = ballBody.position.x;
+            // lastBallPosition.z = ballBody.position.z;
+            // lastBallPosition.y = ballBody.position.y;
         }    
         isBallMoving = false;
         // only draw the aim line if the ball isn't moving
@@ -220,7 +229,12 @@ function resetCamera() {
 // hit the ball when button is clicked!
 let hitButton = /** @type {HTMLElement} */ (document.getElementById("rollBall"));
 hitButton.onclick = function () {
-    if (!isBallMoving) rollBall(AIM_ANGLE, POWER);
+    if (!isBallMoving) {
+        lastBallPosition.x = ballBody.position.x;
+        lastBallPosition.z = ballBody.position.z;
+        lastBallPosition.y = ballBody.position.y;
+        rollBall(AIM_ANGLE, POWER)
+    };
 }
 
 // update power from slider value
@@ -273,5 +287,20 @@ hole3Button.onclick = function () {
     startHole(new Hole3(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 3");
 }
 hole4Button.onclick = function () {
-    startHole(new Hole4(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 4");
+    startHole(new Hole4(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 4", - Math.PI/2);
+}
+hole5Button.onclick = function () {
+    startHole(new Hole5(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 5");
+}
+hole6Button.onclick = function () {
+    startHole(new Hole6(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 6");
+}
+hole7Button.onclick = function () {
+    startHole(new Hole7(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 7");
+}
+hole8Button.onclick = function () {
+    startHole(new Hole8(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 8");
+}
+hole9Button.onclick = function () {
+    startHole(new Hole9(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 9");
 }

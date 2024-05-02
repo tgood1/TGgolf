@@ -5,7 +5,7 @@ import { HoleAssembly } from "./HoleAssembly.js";
 import { TGWall } from './TGWall.js';
 
 
-export class Hole4 {
+export class Hole8 {
 	constructor(world, scene, physMat, params, contactMat) {
 		let x = params.x ?? 0;
 		let y = params.y ?? 0;
