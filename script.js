@@ -106,8 +106,7 @@ function startHole (holeObject, holeLabel, aimAngle) {
 }
 
 // start with Hole #1
-// startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
-startHole(new Hole8(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 8");
+startHole(new Hole1(world, scene, wallPhysMat, {y:0}, ballWallMat), "HOLE 1");
 
 // left/right arrow key input will update the AIM_ANGLE and the aim slider display
 
