@@ -32,11 +32,13 @@ export class TGPlatform {
 		let x = params.x ?? 0;
 		let z = params.z ?? 0;
 		let rotationX = params.rotationX ?? 0;
+		let rotationZ = params.rotationZ ?? 0;
+		let rotationY = params.rotationY ?? 0;
 		let wallMat = new T.MeshStandardMaterial({color: params.color ?? "green"});
 		let objectsAry = [];
-		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: thickness, depth: length, width: width, x:x, y: y, z: z, color: "green", rotationX: rotationX}, contactMat));
-		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: 5, depth: 1, width: length, rotationX: rotationX, rotationY: Math.PI / 2,z: z, y: y + 2.5, x: x - ((width/2)-0.5)}, contactMat));
-		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: 5, depth: 1, width: length, rotationX: rotationX,  rotationY: Math.PI / 2,z: z, y: y + 2.5, x: x + (width / 2) - .5}, contactMat));
+		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: thickness, depth: length, width: width, x:x, y: y, z: z, color: "green", rotationX: rotationX, rotationZ: rotationZ, rotationY: rotationY}, contactMat));
+		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: 5, depth: 1, width: length, rotationX: rotationX, rotationZ: rotationZ, rotationY: rotationY+ Math.PI / 2,z: z, y: y + 2.5, x: x - ((width/2)-0.5)}, contactMat));
+		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: 5, depth: 1, width: length, rotationX: rotationX, rotationZ: rotationZ,  rotationY: rotationY + Math.PI / 2,z: z, y: y + 2.5, x: x + (width / 2) - .5}, contactMat));
 		this.world = world;
 		this.scene = scene;
 		// this.body = wallBody;

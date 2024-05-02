@@ -12,15 +12,17 @@ export class Hole7 {
 		let z = params.z ?? 0;
 		let objectAry = [];
 		// floors
-		objectAry.push(new TGPlatform(world, scene, physMat, {z: 80, width: 50, rotationX: 0, length:310}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {z:-50, width: 50, rotationX: 0, length:50}, contactMat));
+
+		objectAry.push(new TGPlatform(world, scene, physMat, {z: 100, width: 250, rotationX: 0, length:260}, contactMat));
+
 
 		// walls
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z, y: y + 2.5, x: x , color:"yellow", rotationY: Math.PI/4}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z + 50, y: y + 2.5, x: x + 14 , color:"yellow", rotationY: -Math.PI/4}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z + 50, y: y + 2.5, x: x -14, color:"yellow", rotationY: Math.PI/4}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 140,z: z +75, y: y + 2.5, x: x - 50, color: "yellow", rotationY: Math.PI / 4}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 140,z: z +75, y: y + 2.5, x: x + 50, color: "yellow", rotationY: -Math.PI / 4}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 105,z: z +145, y: y + 2.5, x: x - 50, color: "yellow", rotationY: -Math.PI / 8}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 105,z: z +145, y: y + 2.5, x: x + 50, color: "yellow", rotationY: Math.PI / 8}, contactMat));
 		
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z +140, y: y + 2.5, x: x , color:"yellow", rotationY: Math.PI/4}, contactMat));
-		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z +140, y: y + 2.5, x: x , color:"yellow", rotationY: -Math.PI/4}, contactMat));
 		// cup
 		objectAry.push(new HoleAssembly(world, scene, physMat, {x: 0, y: 0, z: 250}, contactMat));
 

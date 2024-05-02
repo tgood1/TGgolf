@@ -12,12 +12,20 @@ export class Hole8 {
 		let z = params.z ?? 0;
 		let objectAry = [];
 		// floors
-		objectAry.push(new TGPlatform(world, scene, physMat, {z: -65, width: 50, rotationX: 0, length:90}, contactMat));
-		objectAry.push(new TGWall(world, scene, physMat, {z: 10, x: -50, y: 20, height: 1, width: 200, depth: 100, rotationX: - Math.PI/6}, contactMat));
-		objectAry.push(new TGWall(world, scene, physMat, {z: -50, x: -150, y: -5, height: 1, width: 100, depth: 100, rotationX: 0}, contactMat));
-		objectAry.push(new TGWall(world, scene, physMat, {z: -130, x: -50, y: 15, height: 1, width: 200, depth: 100, rotationX: Math.PI/6}, contactMat));
+		objectAry.push(new TGPlatform(world, scene, physMat, {z:0, width: 50, rotationX: 0, length:150}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 50, width: 150,z: z +100, y: y , x: x -50, color: "green"}, contactMat));
+
+
+
+
+		// walls
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 150,z: z +125, y: y + 2.5, x: x - 50, color: "green"}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 40,z: z +110, y: y + 2.5, x: x  +10, color: "green", rotationY: Math.PI/4}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 30,z: z +110, y: y + 2.5, x: x  - 90, color: "yellow", rotationY: Math.PI/4}, contactMat));
+		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 100,z: z +75, y: y + 2.5, x: x - 75, color: "green"}, contactMat));
+		
 		// cup
-		objectAry.push(new HoleAssembly(world, scene, physMat, {x: -210, y: -5, z: -50}, contactMat));
+		objectAry.push(new HoleAssembly(world, scene, physMat, {x: -150, y: 0, z: 100}, contactMat));
 
 		this.objects = objectAry;
 
