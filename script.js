@@ -1,8 +1,8 @@
 // @ts-check
 
 // Import Three.js and related modules
-import * as T from "./libs/three/build/three.module.js";
-import { OrbitControls } from "./libs/three/examples/jsm/controls/OrbitControls.js";
+import * as T from './node_modules/three/build/three.module.js';
+import {OrbitControls} from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
 // Import Cannon.js
 // @ts-ignore

@@ -1,4 +1,3 @@
-import * as T from "./libs/three/build/three.module.js";
 //@ts-ignore
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
 import { TGWall } from "./TGWall.js";
