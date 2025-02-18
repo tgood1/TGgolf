@@ -41,8 +41,6 @@ export class TGPlatform {
 		objectsAry.push(new TGWall(world,scene, wallPhysMat, {height: 5, depth: 1, width: length, rotationX: rotationX, rotationZ: rotationZ,  rotationY: rotationY + Math.PI / 2,z: z, y: y + 2.5, x: x + (width / 2) - .5}, contactMat));
 		this.world = world;
 		this.scene = scene;
-		// this.body = wallBody;
-		// this.mesh = wall;
 
 		this.objects = objectsAry;
 

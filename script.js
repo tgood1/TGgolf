@@ -1,8 +1,14 @@
 // @ts-check
+
+// Import Three.js and related modules
 import * as T from "./libs/three/build/three.module.js";
 import { OrbitControls } from "./libs/three/examples/jsm/controls/OrbitControls.js";
-//@ts-ignore
+
+// Import Cannon.js
+// @ts-ignore
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
+
+// Import custom modules
 import { TGWall } from "./TGWall.js";
 // import { TGCup } from "./TGCup.js";
 import { Hole1 } from "./Hole1.js";
@@ -15,34 +21,32 @@ import { Hole7 } from "./Hole7.js";
 import { Hole8 } from "./Hole8.js";
 import { Hole9 } from "./Hole9.js";
 
+// Constants
 const windowWidth = 700;
 const windowHeight = 700;
 
+// Renderer setup
 const renderer = new T.WebGLRenderer();
 renderer.setSize(windowWidth, windowHeight);
 document.body.appendChild(renderer.domElement);
+
+// Scene setup
 const scene = new T.Scene();
-const camera = new T.PerspectiveCamera(
-	65,
-	windowWidth / windowHeight,
-	0.1,
-	1000
-);
+const camera = new T.PerspectiveCamera(65, windowWidth / windowHeight, 0.1, 1000);
 const orbit = new OrbitControls(camera, renderer.domElement);
 
-
-const ambientLight = new T.AmbientLight(0x404040,10);
+// Lighting setup
+const ambientLight = new T.AmbientLight(0x404040, 10);
 scene.add(ambientLight);
-let point = new T.PointLight("white", 1, 0, 0);
-//@ts-ignore
-point.position.set(20, 10, 15);
-scene.add(point);
 
+const pointLight = new T.PointLight("white", 1, 0, 0);
+// @ts-ignore
+pointLight.position.set(20, 10, 15);
+scene.add(pointLight);
 
-
+// Ball setup
 const ballGeo = new T.SphereGeometry(2, 50, 50);
-
-let normalTexture = new T.TextureLoader().load("./dimples_normal.jpg");
+const normalTexture = new T.TextureLoader().load("./dimples_normal.jpg");
 let ballMat = new T.MeshStandardMaterial({normalMap: normalTexture})
 // @ts-ignore
 const ballMesh = new T.Mesh( ballGeo, ballMat);

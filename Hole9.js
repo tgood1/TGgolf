@@ -24,7 +24,6 @@ export class Hole9 {
 		objectAry.push(new HoleAssembly(world, scene, physMat, {x: 0, y: 0, z: 250}, contactMat));
 
 		this.objects = objectAry;
-
 		this.BallStartPos = new CANNON.Vec3(x, y +4, z - 60);
 	}
 

@@ -15,9 +15,6 @@ export class Hole8 {
 		objectAry.push(new TGPlatform(world, scene, physMat, {z:0, width: 50, rotationX: 0, length:150}, contactMat));
 		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 50, width: 150,z: z +100, y: y , x: x -50, color: "green"}, contactMat));
 
-
-
-
 		// walls
 		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 150,z: z +125, y: y + 2.5, x: x - 50, color: "green"}, contactMat));
 		objectAry.push(new TGWall(world,scene, physMat, {height: 5, depth: 1, width: 40,z: z +110, y: y + 2.5, x: x  +10, color: "green", rotationY: Math.PI/4}, contactMat));

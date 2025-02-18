@@ -3,8 +3,6 @@ import * as T from "./libs/three/build/three.module.js";
 import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
 import { TGWall } from "./TGWall.js";
 
-
-// make a wall?
 export class TGCup {
 	/**
 	 * @param {CANNON world} world
@@ -27,15 +25,8 @@ export class TGCup {
 	constructor(world, scene, cupPhysMat, params, sphereCupMat) {
 		let radius = 5.5;
 		let height = 8;
-		// let depth = params.depth ?? 1;
-		// let cupMat = new T.MeshStandardMaterial({color: "white", side: T.DoubleSide});
 
-		// let cupGeom = new T.CylinderGeometry(radius, radius, height, 32, 10, true);
-
-		// let cup = new T.Mesh(cupGeom, cupMat);
-		// cupGeom.translate(0,-height/2 + 2, 0);
-
-		// scene.add(cup);
+		
 		const wallHeight = 8;
 		const outerRadius = radius + wallHeight / 2;
 		let wallAry = [];
@@ -45,8 +36,6 @@ export class TGCup {
 		const x = params.x ?? 0;
 		const z = params.z ?? 0;
 		
-		// let wall1 = new TGWall(world, scene, cupPhysMat, {z: outerRadius, width: 10, height: wallHeight, color: "orange", rotationX: Math.PI / 2}, sphereCupMat);
-		// let wall2 = new TGWall(world, scene, cupPhysMat, {z: -outerRadius, width: 10, height: wallHeight, color: "orange", rotationX: Math.PI / 2}, sphereCupMat);
 		const innerRadius = radius - 0.5;
 		for (let i = 0; i < numWalls; i++) {
 			let  rotZ = (i / numWalls) * 2 * Math.PI;
@@ -63,8 +52,6 @@ export class TGCup {
 		// bottom of the cup
 		objectAry.push(new TGWall(world, scene, cupPhysMat, {y: yPos - height, z: z, x: x, width: radius * 2, height: radius * 2, color: "white", rotationX: Math.PI / 2}, sphereCupMat));
 		this.objects = objectAry;
-		// this.world = world;
-		// this.scene = scene;
 	}
 
 	remove() {

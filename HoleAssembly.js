@@ -1,10 +1,5 @@
-// import * as T from "./libs/three/build/three.module.js";
-// //@ts-ignore
-// import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
-
 import { TGWall } from "./TGWall.js";
 import { TGCup } from "./TGCup.js";
-// import { TGPlatform } from "./TGPlatform.js";
 
 
 export class HoleAssembly {
@@ -22,7 +17,6 @@ export class HoleAssembly {
 		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 20, width: 20, y: y, x: x - 15, z: z}, contactMat));
 		// back:
 		objectAry.push(new TGWall(world,scene, physMat, {height: 1, depth: 10, width: 50, y: y, z: z -15, x: x}, contactMat));
-		
 		// cup
 		objectAry.push(new TGCup(world, scene, physMat, {x: x, y: y, z: z}, contactMat));
 		
