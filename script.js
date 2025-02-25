@@ -23,7 +23,7 @@ import { Hole9 } from "./Hole9.js";
 
 // Constants
 const windowWidth = 700;
-const windowHeight = 700;
+const windowHeight = 500;
 
 // Renderer setup
 const renderer = new T.WebGLRenderer();
