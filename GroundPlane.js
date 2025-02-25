@@ -1,6 +1,6 @@
 //@ts-check
 
-import * as T from './node_modules/three/build/three.module.js';
+import * as T from './libs/three.module.js';
 
 
 export class GroundPlane extends T.Object3D {

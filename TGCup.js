@@ -1,5 +1,5 @@
 //@ts-ignore
-import * as CANNON from './node_modules/cannon-es/dist/cannon-es.js';
+import * as CANNON from './libs/cannon-es.js';
 import { TGWall } from "./TGWall.js";
 
 export class TGCup {
